@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import { ImageSlider } from "./components/ImageSlider";
+import Counter from "./components/Counter";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class App extends Component {
+  state = {
+    visible: true,
+  };
+
+  render() {
+    let slider = this.state.visible ? (
+      <ImageSlider />
+    ) : (
+      <div>
+        <Counter initialCount={1}></Counter>
+      </div>
+    );
+
+    if (!this.state.visible) {
+      slider = <div>Display nothing!!</div>;
+    }
+
+    const buttonText = this.state.visible ? "Hide" : "Show";
+
+    return (
+      <div className="App">
+        {slider}
+        <button
+          onClick={() => {
+            this.setState({ visible: !this.state.visible });
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          {buttonText}
+        </button>
+      </div>
+    );
+  }
 }
 
 export default App;
